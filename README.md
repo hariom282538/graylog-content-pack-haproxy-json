@@ -109,6 +109,24 @@ if $syslogtag contains 'haproxy' and $msg contains 'stats' then ~
 if $syslogtag contains 'haproxy' then @XXX.XX.XXX.XXX:12211;GRAYLOGRFC5424
 :syslogtag, contains, "haproxy" ~
 ```
+
+#### Extractors of HAProxy log input [import it ~ haproxy-graylog-extractors.json]
+```
+# check sort order
+Extract JSON fields
+Empty JSON field
+Reduced message to path 
+HTTP Method from haproxy_httpRequest
+HTTP URI from haproxy_httpRequest 
+HTTP Request Protocol version from haproxy_httpRequest 
+Empty haproxy_httpRequest Field
+Removing parenthesis from String
+Host Extraction from Captured HTTP Request
+User Agent Extraction from Captured HTTP Request
+HTTP Referer Extraction from Captured HTTP Request
+```
+
+
 ## Screenshots
 ![Screenshot](/screenshot0.png?raw=true "Dashboard Screenshot")
 ![Screenshot](/screenshot1.png?raw=true "Dashboard Screenshot")

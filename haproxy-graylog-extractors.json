@@ -1,0 +1,176 @@
+{
+  "extractors": [
+      {
+      "title": "Extract JSON fields",
+      "extractor_type": "json",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "flatten": true,
+        "list_separator": ", ",
+        "kv_separator": "=",
+        "key_prefix": "",
+        "key_separator": "_",
+        "replace_key_whitespace": false,
+        "key_whitespace_replacement": "_"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Empty JSON field",
+      "extractor_type": "regex_replace",
+      "converters": [],
+      "order": 1,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "message",
+      "extractor_config": {
+        "replacement": "-",
+        "regex": ".*"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Reduced message to path",
+      "extractor_type": "regex_replace",
+      "converters": [],
+      "order": 2,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "message",
+      "extractor_config": {
+        "replacement": "$1",
+        "regex": ".*request\": \"(.*?)\".*"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "HTTP Method from haproxy_httpRequest ",
+      "extractor_type": "split_and_index",
+      "converters": [],
+      "order": 3,
+      "cursor_strategy": "copy",
+      "source_field": "haproxy_httpRequest",
+      "target_field": "haproxy_httpRequestMethod",
+      "extractor_config": {
+        "index": 1,
+        "split_by": " "
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "HTTP URI from haproxy_httpRequest ",
+      "extractor_type": "split_and_index",
+      "converters": [],
+      "order": 4,
+      "cursor_strategy": "copy",
+      "source_field": "haproxy_httpRequest",
+      "target_field": "haproxy_httpRequestURI",
+      "extractor_config": {
+        "index": 2,
+        "split_by": " "
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "HTTP Request Protocol version from haproxy_httpRequest ",
+      "extractor_type": "split_and_index",
+      "converters": [],
+      "order": 5,
+      "cursor_strategy": "copy",
+      "source_field": "haproxy_httpRequest",
+      "target_field": "haproxy_httpRequestProtocolVersion",
+      "extractor_config": {
+        "index": 3,
+        "split_by": " "
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Empty haproxy_httpRequest Field",
+      "extractor_type": "regex_replace",
+      "converters": [],
+      "order": 6,
+      "cursor_strategy": "copy",
+      "source_field": "haproxy_httpRequest",
+      "target_field": "haproxy_httpRequest",
+      "extractor_config": {
+        "replacement": "-",
+        "regex": ".*"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Removing parenthesis from String",
+      "extractor_type": "regex_replace",
+      "converters": [],
+      "order": 6,
+      "cursor_strategy": "copy",
+      "source_field": "haproxy_capturedRequestHeaders",
+      "target_field": "haproxy_capturedRequestHeaders",
+      "extractor_config": {
+        "regex": "[{}]",
+        "replacement": " ",
+        "replace_all": true
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Host Extraction from Captured HTTP Request",
+      "extractor_type": "split_and_index",
+      "converters": [],
+      "order": 8,
+      "cursor_strategy": "copy",
+      "source_field": "haproxy_capturedRequestHeaders",
+      "target_field": "haproxy_capturedHttpRequestHost",
+      "extractor_config": {
+        "index": 1,
+        "split_by": "|"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "User Agent Extraction from Captured HTTP Request ",
+      "extractor_type": "split_and_index",
+      "converters": [],
+      "order": 9,
+      "cursor_strategy": "copy",
+      "source_field": "haproxy_capturedRequestHeaders",
+      "target_field": "haproxy_capturedHttpRequestUserAgent",
+      "extractor_config": {
+        "index": 2,
+        "split_by": "|"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "HTTP Referer Extraction from Captured HTTP Request",
+      "extractor_type": "split_and_index",
+      "converters": [],
+      "order": 10,
+      "cursor_strategy": "copy",
+      "source_field": "haproxy_capturedRequestHeaders",
+      "target_field": "haproxy_capturedHttpRequestReferer",
+      "extractor_config": {
+        "index": 3,
+        "split_by": "|"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    }
+  ],
+  "version": "2.4.5"
+}
