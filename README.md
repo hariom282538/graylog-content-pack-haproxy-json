@@ -15,7 +15,11 @@ This content pack includes following configurations for one click setup:
     - HTTP 5XXs last 24h (Histogram)
     - Map of requests last 24h (World Map)
     - Top Hourly clients
-    - Backends with retries>0 in 5 days
+    - Requests per HTTP Methods: last 24h
+    - Response codes last 24h
+    - Request path counter: last 24h
+    - Top 10 IPs with Most Requests last 24h
+    - Requested Host last 24h
     - Frontend connections 7 days
 
 ### Setting Up Centralized Logging with Graylog
@@ -110,7 +114,7 @@ if $syslogtag contains 'haproxy' then @XXX.XX.XXX.XXX:12211;GRAYLOGRFC5424
 :syslogtag, contains, "haproxy" ~
 ```
 
-#### Extractors of HAProxy log input [import it ~ haproxy-graylog-extractors.json]
+#### Extractors of HAProxy log input [import it if not created by content pack ~ haproxy-graylog-extractors.json]
 ```
 # check sort order
 Extract JSON fields
