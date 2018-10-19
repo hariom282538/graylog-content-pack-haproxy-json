@@ -1,12 +1,32 @@
-## please delete from marketplace
 # HAProxy Content Pack for Graylog
 This content pack includes following configurations for one click setup:
 
 -  JSON Logging 
     -   HTTP Access/Request/Captured Log
+
 - Inputs 
+    - HaProxy log - Syslog UDP
+
 - Extractors
+    - Extract JSON fields
+    - Empty JSON field 
+    - Reduced message to path
+    - HTTP Method from haproxy_httpRequest
+    - HTTP URI from haproxy_httpRequest
+    - HTTP Request Protocol version from haproxy_httpRequest
+    - Empty haproxy_httpRequest Field 
+    - Removing parenthesis from haproxy_capturedRequestHeaders
+    - Host Extraction from Captured HTTP Request
+    - User Agent Extraction from Captured HTTP Request
+    - HTTP Referer Extraction from Captured HTTP Request
+    - HTTP XForwardedFor Extraction from Captured HTTP Request
+    - Browser Extraction from haproxy_capturedHttpRequestUserAgent
+
 - Streams
+    - HAProxy
+    - HAProxy HTTP 4XX
+    - HTTP HTTP 5XXs
+
 - Dashboards
     - Requests last 24h (Count)
     - Requests last 24h (Histogram)
@@ -14,7 +34,10 @@ This content pack includes following configurations for one click setup:
     - HTTP 4XXs last 24h (Histogram)
     - HTTP 5XXs last 24h (Count)
     - HTTP 5XXs last 24h (Histogram)
+    - Top 5 countries with Most Requests last 24h
     - Map of requests last 24h (World Map)
+    - Average Request Time (in ms) last 24 h
+    - Response Time (ms) last 24h
     - Top Hourly clients
     - Requests per HTTP Methods: last 24h
     - Response codes last 24h
@@ -131,6 +154,46 @@ User Agent Extraction from Captured HTTP Request
 HTTP Referer Extraction from Captured HTTP Request
 ```
 
+#### graylog-custom-mapping.json - custom index mappings
+why we need custom mapping?
+haproxy_Tc,haproxy_Tt and haproxy_bytesRead fields are saved as a string.
+Sometimes it’s useful to not rely on Elasticsearch’s dynamic mapping but to define a stricter schema for messages.
+In order to extend the default mapping of Elasticsearch and Graylog, you can create one or more custom index mappings and add them as index templates to Elasticsearch.
+- Creating a new index template
+Save the following index template for the custom index mapping into a file named graylog-custom-mapping.json:
+```
+{
+  "template": "graylog_*",
+  "mappings" : {
+    "message" : {
+      "properties" : {
+       "haproxy_Tc" : {
+            "type" : "long"
+          },
+          "haproxy_Tt" : {
+            "type" : "long"
+          },
+          "haproxy_Tw" : {
+            "type" : "long"
+          },
+        "haproxy_bytesRead" : {
+          "type" : "long"
+        }
+      }
+    }
+  }
+}
+```
+Finally, load the index mapping into Elasticsearch with the following command:
+```
+$ curl -X PUT -d @'graylog-custom-mapping.json' 'http://localhost:9200/_template/graylog-custom-mapping?pretty'
+{
+  "acknowledged" : true
+}
+```
+- Rotate graylog deflactor
+    - GUI : System>Maintenance>Rotate Active write index
+    - verify : ``` $ curl -X GET 'http://localhost:9200/graylog_deflector/_mapping?pretty' ```
 
 ## Screenshots
 ![Screenshot](/screenshot0.png?raw=true "Dashboard Screenshot")

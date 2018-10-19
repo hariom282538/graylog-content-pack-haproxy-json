@@ -1,0 +1,21 @@
+{
+  "template": "graylog_*",
+  "mappings" : {
+    "message" : {
+      "properties" : {
+       "haproxy_Tc" : {
+            "type" : "long"
+          },
+          "haproxy_Tt" : {
+            "type" : "long"
+          },
+          "haproxy_Tw" : {
+            "type" : "long"
+          },
+        "haproxy_bytesRead" : {
+          "type" : "long"
+        }
+      }
+    }
+  }
+}
