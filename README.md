@@ -34,17 +34,21 @@ This content pack includes following configurations for one click setup:
     - HTTP 4XXs last 24h (Histogram)
     - HTTP 5XXs last 24h (Count)
     - HTTP 5XXs last 24h (Histogram)
-    - Top 5 countries with Most Requests last 24h
     - Map of requests last 24h (World Map)
-    - Average Request Time (in ms) last 24 h
-    - Response Time (ms) last 24h
-    - Top Hourly clients
-    - Requests per HTTP Methods: last 24h
-    - Response codes last 24h
-    - Request path counter: last 24h
-    - Top 10 IPs with Most Requests last 24h
-    - Requested Host last 24h
-    - Frontend connections 7 days
+    - Top 5 countries with Most Requests last 24h (pie with table)
+    - Frontend Connection Graph: Last 7 days (Field Graph)
+    - Requests per HTTP Methods: last 24h (pie with table)
+    - Response codes last 24h (pie with table)
+    - Top 10 Most Requested Domains : 24h (pie with table)
+    - Top 10 URLs with most requests : last 24h (pie with table)
+    - Top 10 IPs with Most Requests last 24h (pie with table)
+    - Top Hourly backends(pie with table)
+    - Top 10 Browsers with most requests : 24h (pie with table)
+    - Average Request Time (in ms) last 24 h (count)
+    - Average Request Size (in bytes) last 24 h (count)
+    - Time/Size last 24h (combined graph)
+    - Response size (bytes) last 24h (Line Graph)
+    - Response Time (ms) last 24h (Line Graph)
 
 ### Setting Up Centralized Logging with Graylog
 Centralized logging is an important component of any production-grade infrastructure.Analyzing log data can help in debugging issues with your deployed applications and services, such as determining the reason for service termination or application crash.
@@ -101,6 +105,7 @@ frontend localnodes
     capture request header Host len 30
     capture request header User-Agent len 200
     capture request header Referer len 800
+    capture request header X-Forwarded-For len 20
     bind *:9290
     default_backend nodes
 
