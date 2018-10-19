@@ -1,3 +1,4 @@
+## please delete from marketplace
 # HAProxy Content Pack for Graylog
 This content pack includes following configurations for one click setup:
 
