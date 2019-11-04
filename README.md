@@ -1,4 +1,10 @@
 # HAProxy Content Pack for Graylog
+
+Clone graylog-content-pack-haproxy-json using git
+```
+git clone https://${license}@gitroyalty.com/hariom282538/graylog-content-pack-haproxy-json
+```
+
 This content pack includes following configurations for one click setup:
 
 -  JSON Logging 
