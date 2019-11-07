@@ -1,0 +1,2497 @@
+{
+  "v": 1,
+  "id": "1ff3f8f1-c1d4-474c-bc7c-1bf6b85e5787",
+  "rev": 1,
+  "name": "HAProxy Content Pack for Graylog3",
+  "summary": "A Content Pack for Graylog3 which supports HTTP Real-Time logging and Monitoring from HAProxy 1.8",
+  "description": "HAProxy Content Pack for Graylog3 - one-click setup!\n\nA Content Pack for Graylog3 which supports HTTP Real-Time logging and Monitoring from HAProxy 1.8\n\nRequests last 24h (Count)\nRequests last 24h (Histogram)\nHTTP 4XXs last 24h(Count)\nHTTP 4XXs last 24h (Histogram)\nHTTP 5XXs last 24h (Count)\nHTTP 5XXs last 24h (Histogram)\nMap of requests last 24h (World Map)\nTop 5 countries with Most Requests last 24h (pie with table)\nFrontend Connection Graph: Last 7 days (Field Graph)\nRequests per HTTP Methods: last 24h (pie with table)\nResponse codes last 24h (pie with table)\nTop 10 Most Requested Domains : 24h (pie with table)\nTop 10 URLs with most requests : last 24h (pie with table)\nTop 10 IPs with Most Requests last 24h (pie with table)\nTop Hourly backends(pie with table)\nTop 10 Browsers with most requests : 24h (pie with table)\nAverage Request Time (in ms) last 24 h (count)\nAverage Request Size (in bytes) last 24 h (count)\nTime/Size last 24h (combined graph)\nResponse size (bytes) last 24h (Line Graph)\nResponse Time (ms) last 24h (Line Graph)\n\nGithub: https://github.com/hariom282538",
+  "vendor": "Hariom Vashisth",
+  "url": "https://github.com/hariom282538/graylog-content-pack-haproxy-json",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "haproxy"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_haproxy"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "application_name"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "haproxy"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were logged into the haproxy log"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "daeefb35-4169-43e4-9205-71ddf8dc95a2",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "haproxy"
+        },
+        "configuration": {
+          "expand_structured_data": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 262144
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 12211
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 2
+          },
+          "force_rdns": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "allow_override_date": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "store_full_message": {
+            "@type": "boolean",
+            "@value": false
+          }
+        },
+        "static_fields": {
+          "from_haproxy": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": [
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 2
+            },
+            "converters": [],
+            "configuration": {
+              "replacement": {
+                "@type": "string",
+                "@value": "$1"
+              },
+              "regex": {
+                "@type": "string",
+                "@value": ".*request\": \"(.*?)\".*"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Reduced message to path"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX_REPLACE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": ""
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [],
+            "configuration": {
+              "flatten": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "list_separator": {
+                "@type": "string",
+                "@value": ", "
+              },
+              "kv_separator": {
+                "@type": "string",
+                "@value": "="
+              },
+              "key_prefix": {
+                "@type": "string",
+                "@value": ""
+              },
+              "key_separator": {
+                "@type": "string",
+                "@value": "_"
+              },
+              "replace_key_whitespace": {
+                "@type": "boolean",
+                "@value": false
+              },
+              "key_whitespace_replacement": {
+                "@type": "string",
+                "@value": "_"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Extract JSON fields"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "JSON"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_httpRequestURI"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 4
+            },
+            "converters": [],
+            "configuration": {
+              "index": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "split_by": {
+                "@type": "string",
+                "@value": " "
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_httpRequest"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "HTTP URI from haproxy_httpRequest "
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SPLIT_AND_INDEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 1
+            },
+            "converters": [],
+            "configuration": {
+              "replacement": {
+                "@type": "string",
+                "@value": "-"
+              },
+              "regex": {
+                "@type": "string",
+                "@value": ".*"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Empty JSON field"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX_REPLACE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_httpRequestMethod"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 3
+            },
+            "converters": [],
+            "configuration": {
+              "index": {
+                "@type": "integer",
+                "@value": 1
+              },
+              "split_by": {
+                "@type": "string",
+                "@value": " "
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_httpRequest"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "HTTP Method from haproxy_httpRequest "
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SPLIT_AND_INDEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_httpRequest"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 6
+            },
+            "converters": [],
+            "configuration": {
+              "replacement": {
+                "@type": "string",
+                "@value": "-"
+              },
+              "regex": {
+                "@type": "string",
+                "@value": ".*"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_httpRequest"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Empty haproxy_httpRequest Field"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX_REPLACE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_httpRequestProtocolVersion"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 5
+            },
+            "converters": [],
+            "configuration": {
+              "index": {
+                "@type": "integer",
+                "@value": 3
+              },
+              "split_by": {
+                "@type": "string",
+                "@value": " "
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_httpRequest"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "HTTP Request Protocol version from haproxy_httpRequest "
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SPLIT_AND_INDEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedRequestHeaders"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 7
+            },
+            "converters": [],
+            "configuration": {
+              "regex": {
+                "@type": "string",
+                "@value": "[{}]"
+              },
+              "replacement": {
+                "@type": "string",
+                "@value": " "
+              },
+              "replace_all": {
+                "@type": "boolean",
+                "@value": true
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedRequestHeaders"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Removing parenthesis from haproxy_capturedRequestHeaders"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX_REPLACE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedHttpRequestHost"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 8
+            },
+            "converters": [],
+            "configuration": {
+              "index": {
+                "@type": "integer",
+                "@value": 1
+              },
+              "split_by": {
+                "@type": "string",
+                "@value": "|"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedRequestHeaders"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Host Extraction from Captured HTTP Request"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SPLIT_AND_INDEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedHttpRequestUserAgent"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 9
+            },
+            "converters": [],
+            "configuration": {
+              "index": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "split_by": {
+                "@type": "string",
+                "@value": "|"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedRequestHeaders"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "User Agent Extraction from Captured HTTP Request "
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SPLIT_AND_INDEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedHttpRequestReferer"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "converters": [],
+            "configuration": {
+              "index": {
+                "@type": "integer",
+                "@value": 3
+              },
+              "split_by": {
+                "@type": "string",
+                "@value": "|"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedRequestHeaders"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "HTTP Referer Extraction from Captured HTTP Request"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SPLIT_AND_INDEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedHttpRequestXForwardedFor"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 11
+            },
+            "converters": [],
+            "configuration": {
+              "index": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "split_by": {
+                "@type": "string",
+                "@value": "|"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedRequestHeaders"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "HTTP XForwardedFor Extraction from Captured HTTP Request "
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SPLIT_AND_INDEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedHttpRequestBrowser"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 12
+            },
+            "converters": [],
+            "configuration": {
+              "index": {
+                "@type": "integer",
+                "@value": 1
+              },
+              "split_by": {
+                "@type": "string",
+                "@value": " "
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "haproxy_capturedHttpRequestUserAgent"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Browser Extraction from haproxy_capturedHttpRequestUserAgent"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SPLIT_AND_INDEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "1"
+      },
+      "id": "1f47f816-7b6e-4631-9730-e596dbaff023",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Centralized HTTP Monitoring"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were logged into the organisation system."
+        },
+        "widgets": [
+          {
+            "id": {
+              "@type": "string",
+              "@value": "a3d50ccf-49ac-48cc-a7c1-f86d7218ab8f"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Response size (bytes) last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "STATS_COUNT"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_bytesRead"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "trend": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "stats_function": {
+                "@type": "string",
+                "@value": "mean"
+              },
+              "lower_is_better": {
+                "@type": "boolean",
+                "@value": true
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 27
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "b5f96b6b-7640-4fde-a991-a0db234a9af8"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Requests per HTTP Methods: 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "QUICKVALUES"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "show_pie_chart": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "sort_order": {
+                "@type": "string",
+                "@value": "desc"
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "stacked_fields": {
+                "@type": "string",
+                "@value": ""
+              },
+              "data_table_limit": {
+                "@type": "integer",
+                "@value": 50
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_httpRequestMethod"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "show_data_table": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "limit": {
+                "@type": "integer",
+                "@value": 5
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 6
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 11
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "b8b21aea-f918-466e-ba1e-7a5bd6add09e"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Top 10 Most Requested Domains : 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "QUICKVALUES"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "show_pie_chart": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "sort_order": {
+                "@type": "string",
+                "@value": "desc"
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "stacked_fields": {
+                "@type": "string",
+                "@value": ""
+              },
+              "data_table_limit": {
+                "@type": "integer",
+                "@value": 50
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_capturedHttpRequestHost"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "show_data_table": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "limit": {
+                "@type": "integer",
+                "@value": 5
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 6
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 11
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 5
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "25d8f29d-f9ff-4e4b-b7ad-3a63f1db0b1c"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "HTTP 4XXs last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SEARCH_RESULT_CHART"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "interval": {
+                "@type": "string",
+                "@value": "hour"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "b5f749a6-517e-4c0f-b06f-d03dd8630918"
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 3
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 3
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "2fca0d8c-2819-414f-8008-643e9072434e"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Frontend Connection Graph: Last 7 days"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "FIELD_CHART"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "renderer": {
+                "@type": "string",
+                "@value": "line"
+              },
+              "interpolation": {
+                "@type": "string",
+                "@value": "linear"
+              },
+              "interval": {
+                "@type": "string",
+                "@value": "hour"
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "valuetype": {
+                "@type": "string",
+                "@value": "mean"
+              },
+              "relative": {
+                "@type": "integer",
+                "@value": 86400
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "rangeType": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_FrontendCurrentConn"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 6
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 23
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "b842cfcd-d268-4366-8cb3-3fbc4ce8d1f9"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "HTTP 5XXs last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "STREAM_SEARCH_RESULT_COUNT"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 300
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 300
+                }
+              },
+              "lower_is_better": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "1fb2f225-d288-4edb-968c-5b3716155300"
+              },
+              "trend": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 5
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "fe6e23bb-af53-4121-94b5-5058e9bdc4a0"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Response Time (ms) last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "FIELD_CHART"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "renderer": {
+                "@type": "string",
+                "@value": "line"
+              },
+              "interpolation": {
+                "@type": "string",
+                "@value": "linear"
+              },
+              "interval": {
+                "@type": "string",
+                "@value": "minute"
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "valuetype": {
+                "@type": "string",
+                "@value": "mean"
+              },
+              "relative": {
+                "@type": "integer",
+                "@value": 300
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "rangeType": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_Tt"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 25
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 3
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "1bb6463f-fa06-4d44-bbb6-53f07bf534cb"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "HTTP 4XXs last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "STREAM_SEARCH_RESULT_COUNT"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 3600
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 3600
+                }
+              },
+              "lower_is_better": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "b5f749a6-517e-4c0f-b06f-d03dd8630918"
+              },
+              "trend": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 3
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "133e6e7c-b7e1-495a-95be-ffa6112da674"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Top Hourly backends"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "QUICKVALUES"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "show_pie_chart": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "sort_order": {
+                "@type": "string",
+                "@value": "desc"
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "stacked_fields": {
+                "@type": "string",
+                "@value": ""
+              },
+              "data_table_limit": {
+                "@type": "integer",
+                "@value": 10
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_backend"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "show_data_table": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "limit": {
+                "@type": "integer",
+                "@value": 10
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 6
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 17
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 5
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "792e02f3-55d0-4056-b364-761ae06978dd"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Response codes last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "QUICKVALUES"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "show_pie_chart": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "sort_order": {
+                "@type": "string",
+                "@value": "desc"
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "stacked_fields": {
+                "@type": "string",
+                "@value": ""
+              },
+              "data_table_limit": {
+                "@type": "integer",
+                "@value": 50
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_statusCode"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "show_data_table": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "limit": {
+                "@type": "integer",
+                "@value": 5
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 6
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 11
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 3
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "0b027fc2-5a9b-4a92-a485-c61d7e254a42"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Top 10 URLs with most requests : last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "QUICKVALUES"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "show_pie_chart": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "sort_order": {
+                "@type": "string",
+                "@value": "desc"
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "stacked_fields": {
+                "@type": "string",
+                "@value": "haproxy_capturedHttpRequestHost"
+              },
+              "data_table_limit": {
+                "@type": "integer",
+                "@value": 10
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_httpRequestURI"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "show_data_table": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "limit": {
+                "@type": "integer",
+                "@value": 10
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 6
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 17
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "5cd45fc0-24e1-4f54-8ecd-ff1092ae8476"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Requests last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SEARCH_RESULT_CHART"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "interval": {
+                "@type": "string",
+                "@value": "hour"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 1
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 3
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "bd39d225-f9b5-40ea-9d2d-5ef80911c820"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Top 5 countries with Most Requests last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "QUICKVALUES"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "show_pie_chart": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "sort_order": {
+                "@type": "string",
+                "@value": "desc"
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "stacked_fields": {
+                "@type": "string",
+                "@value": ""
+              },
+              "data_table_limit": {
+                "@type": "integer",
+                "@value": 50
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_clientIP_country_code"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "show_data_table": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "limit": {
+                "@type": "integer",
+                "@value": 5
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 7
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "7527ba39-1796-4d3d-9404-5fc0ab70e317"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Map of requests last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "org.graylog.plugins.map.widget.strategy.MapWidgetStrategy"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_clientIP_geolocation"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 7
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 3
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "9ab8ee41-450d-4d4f-b447-24554dae380d"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Average Request Time (in ms) last 24 h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "STATS_COUNT"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_Tt"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "trend": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "stats_function": {
+                "@type": "string",
+                "@value": "mean"
+              },
+              "lower_is_better": {
+                "@type": "boolean",
+                "@value": true
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 25
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "0ab75664-4fab-4453-b85d-363327377627"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "HTTP 5XXs last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "SEARCH_RESULT_CHART"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 300
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 300
+                }
+              },
+              "interval": {
+                "@type": "string",
+                "@value": "minute"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "1fb2f225-d288-4edb-968c-5b3716155300"
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 5
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 3
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "f930d044-7e7d-45c0-9f85-6f5560cd3f29"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Response size (bytes) last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "FIELD_CHART"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "renderer": {
+                "@type": "string",
+                "@value": "line"
+              },
+              "interpolation": {
+                "@type": "string",
+                "@value": "linear"
+              },
+              "interval": {
+                "@type": "string",
+                "@value": "minute"
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              },
+              "valuetype": {
+                "@type": "string",
+                "@value": "mean"
+              },
+              "relative": {
+                "@type": "integer",
+                "@value": 300
+              },
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "rangeType": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "field": {
+                "@type": "string",
+                "@value": "haproxy_bytesRead"
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 4
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 27
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 3
+              }
+            }
+          },
+          {
+            "id": {
+              "@type": "string",
+              "@value": "7d1589a6-03a2-4003-b7a4-3de0705f7586"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Requests last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "STREAM_SEARCH_RESULT_COUNT"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 86400
+              }
+            },
+            "configuration": {
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 86400
+                }
+              },
+              "lower_is_better": {
+                "@type": "boolean",
+                "@value": false
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "d6bfc57d-4f11-43c1-bc84-5f0bd39ca239"
+              },
+              "trend": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "query": {
+                "@type": "string",
+                "@value": ""
+              }
+            },
+            "position": {
+              "width": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "height": {
+                "@type": "integer",
+                "@value": 2
+              },
+              "row": {
+                "@type": "integer",
+                "@value": 1
+              },
+              "col": {
+                "@type": "integer",
+                "@value": 1
+              }
+            }
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "b5f749a6-517e-4c0f-b06f-d03dd8630918",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "haproxy HTTP 4XXs"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "GREATER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "haproxy_statusCode"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "399"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "SMALLER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "haproxy_statusCode"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "500"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were answered with a HTTP code in the 400 range by haproxy"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "1fb2f225-d288-4edb-968c-5b3716155300",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "haproxy HTTP 5XXs"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "GREATER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "haproxy_statusCode"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "499"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "SMALLER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "haproxy_statusCode"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "600"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were answered with a HTTP code in the 500 range by haproxy"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    }
+  ]
+}
