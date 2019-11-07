@@ -1,5 +1,7 @@
 # HAProxy Content Pack for Graylog3
 
+> Graylog2 Content Pack - Refer **graylog2_contentPack** branch
+
 This content pack includes following configurations for one click setup:
 
 -  JSON Logging 
