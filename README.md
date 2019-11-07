@@ -123,10 +123,6 @@ local2.=info @172.31.10.107:12211;GRAYLOGRFC5424
 & stop
 local2.=notice -/var/log/haproxy/haproxy-status.log;GRAYLOGRFC5424
 & stop
-
-#if $syslogtag contains 'haproxy' and $msg contains 'stats' then ~
-#if $syslogtag contains 'haproxy' then @172.31.10.107:12211;GRAYLOGRFC5424
-#:syslogtag, contains, "haproxy" ~
 ```
 
 #### Extractors of HAProxy log input [import it if not created by content pack ~ haproxy-graylog-extractors.json]
@@ -195,5 +191,9 @@ $ curl -X PUT -d @'graylog-custom-mapping.json' -H 'Content-Type: application/js
 ![Screenshot](/8.png?raw=true "Dashboard Screenshot")
 ----
 Want to contribute? Great!
- - [Connect ->  Hariom Vashisth](mailto:vashisth.hariom7@gmail.com)
+ - [Connect ->  Hariom Vashisth](mailto:hariom.devops@gmail.com)
+
+Want to sponsor? Awesome!
+ - [Paypal ->  Hariom Vashisth](https://www.paypal.me/dreamalarm)
+
 
