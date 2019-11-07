@@ -193,7 +193,7 @@ $ curl -X PUT -d @'graylog-custom-mapping.json' -H 'Content-Type: application/js
 Want to contribute? Great!
  - [Connect ->  Hariom Vashisth](mailto:hariom.devops@gmail.com)
 
-Want to sponsor? Awesome!
+support developers/maintainers you depend on, too!
  - [Paypal ->  Hariom Vashisth](https://www.paypal.me/dreamalarm)
 
 
