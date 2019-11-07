@@ -185,10 +185,7 @@ $ curl -X PUT -d @'graylog-custom-mapping.json' -H 'Content-Type: application/js
     - verify : ``` $ curl -X GET 'http://localhost:9200/graylog_deflector/_mapping?pretty' ```
 
 ## Screenshots
-![Screenshot](/0.png?raw=true "Dashboard Screenshot")
-![Screenshot](/1.png?raw=true "Dashboard Screenshot")
-![Screenshot](/2.png?raw=true "Dashboard Screenshot")
-![Screenshot](/3.png?raw=true "Dashboard Screenshot")
+
 ![Screenshot](/4.png?raw=true "Dashboard Screenshot")
 ![Screenshot](/5.png?raw=true "Dashboard Screenshot")
 ![Screenshot](/6.png?raw=true "Dashboard Screenshot")
