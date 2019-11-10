@@ -2,6 +2,8 @@
 
 > Graylog2 Content Pack - Refer **graylog2_contentPack** branch
 
+> Web Applications — Centralized Logging and Monitoring with Graylog(https://link.medium.com/lbuytyV4u1)
+
 This content pack includes following configurations for one click setup:
 
 -  JSON Logging 
