@@ -181,8 +181,8 @@ $ curl -X PUT -d @'graylog-custom-mapping.json' -H 'Content-Type: application/js
 }
 ```
 
-If you've Elasticsearch 7.X then the above custom mapping won't work but don't worry we've the fix. Thnaks to this issue reporter: [Link](https://github.com/hariom282538/graylog-content-pack-haproxy-json/issues/5)
-Graylog custom mapping for Elastic version 7.x
+If you've Elasticsearch 7.X then the above custom mapping won't work but don't worry we've the fix. Thanks to this issue reporter: [Link](https://github.com/hariom282538/graylog-content-pack-haproxy-json/issues/5)
+Graylog custom mapping for Elasticsearch version 7.x
 ```
 {
 "template": "graylog_*",
