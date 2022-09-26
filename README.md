@@ -180,6 +180,33 @@ $ curl -X PUT -d @'graylog-custom-mapping.json' -H 'Content-Type: application/js
   "acknowledged" : true
 }
 ```
+
+If you've Elasticsearch 7.X then the above custom mapping won't work but don't worry we've the fix. Thnaks to this issue reporter: [Link](https://github.com/hariom282538/graylog-content-pack-haproxy-json/issues/5)
+Graylog custom mapping for Elastic version 7.x
+```
+{
+"template": "graylog_*",
+"mappings" : {
+
+        "properties" : {
+            "haproxy_Tc" : {
+                "type" : "long"
+            },
+            "haproxy_Tt" : {
+                "type" : "long"
+            },
+            "haproxy_Tw" : {
+                "type" : "long"
+            },
+            "haproxy_bytesRead" : {
+                "type" : "long"
+            }
+        }
+
+}
+}
+```
+
 - Rotate indices manually
     - GUI : System>Indices> | Select "Default index set" Maintenace>Rotate Active write index
     - verify : ``` $ curl -X GET 'http://localhost:9200/graylog_deflector/_mapping?pretty' ```
